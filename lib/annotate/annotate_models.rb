@@ -737,7 +737,11 @@ module AnnotateModels
           !klass.abstract_class? &&
           klass.table_exists?
 
-        annotated.concat(annotate(klass, file, header, options)) if do_annotate
+        temp = annotate(klass, file, header, options)
+
+        puts "file: #{file}, do_annotate: #{do_annotate}, annotate: #{temp}"
+
+        annotated.concat(temp) if do_annotate
       rescue BadModelFileError => e
         unless options[:ignore_unknown_models]
           $stderr.puts "Unable to annotate #{file}: #{e.message}"
